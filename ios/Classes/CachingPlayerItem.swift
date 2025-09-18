@@ -36,7 +36,7 @@ fileprivate extension URL {
 
 open class CachingPlayerItem: AVPlayerItem {
     
-    class ResourceLoaderDelegate: NSObject, AVAssetResourceLoaderDelegate, URLSessionDelegate, URLSessionDataDelegate, URLSessionTaskDelegate {
+    final class ResourceLoaderDelegate: NSObject, AVAssetResourceLoaderDelegate, URLSessionDelegate, URLSessionDataDelegate, URLSessionTaskDelegate, @unchecked Sendable {
         
         var playingFromData = false
         var mimeType: String? // is required when playing from Data
