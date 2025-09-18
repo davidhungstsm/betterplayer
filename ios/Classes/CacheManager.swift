@@ -110,19 +110,20 @@ import PINCache
         } else {
             // Trying to retrieve a track from cache syncronously
             let data = try? storage?.object(forKey: _key)
+            let safeHeaders = headers
             if data != nil {
                 // The file is cached.
                 self._existsInStorage = true
                 let mimeTypeResult = getMimeType(url:url, explicitVideoExtension: videoExtension)
                 if (mimeTypeResult.1.isEmpty){
                     NSLog("Cache error: couldn't find mime type for url: \(url.absoluteURL). For this URL cache didn't work and video will be played without cache.")
-                    playerItem = CachingPlayerItem(url: url, cacheKey: _key, headers: headers)
+                    playerItem = CachingPlayerItem(url: url, cacheKey: _key, headers: safeHeaders)
                 } else {
                     playerItem = CachingPlayerItem(data: data!, mimeType: mimeTypeResult.1, fileExtension: mimeTypeResult.0)
                 }
             } else {
                 // The file is not cached.
-                playerItem = CachingPlayerItem(url: url, cacheKey: _key, headers: headers)
+                playerItem = CachingPlayerItem(url: url, cacheKey: _key, headers: safeHeaders)
                 self._existsInStorage = false
             }
         }
