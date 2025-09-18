@@ -110,7 +110,7 @@ import PINCache
         } else {
             // Trying to retrieve a track from cache syncronously
             let data = try? storage?.object(forKey: _key)
-            let safeHeaders = headers
+            let safeHeaders = headers?.mapValues { $0 } ?? [:]
             if data != nil {
                 // The file is cached.
                 self._existsInStorage = true
